@@ -1,7 +1,0 @@
-"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
-"","13303","Scenario 1: locked out user shows error message","webkit","2026-02-01","passed","2026-02-01","","testscripts.spec.js","",""
-"","25375","Scenario 2: valid user can log in","firefox","2026-02-01","passed","2026-02-01","","testscripts.spec.js","",""
-"","15086","Scenario 2: valid user can log in","webkit","2026-02-01","passed","2026-02-01","","testscripts.spec.js","",""
-"","25835","Scenario 1: locked out user shows error message","firefox","2026-02-01","passed","2026-02-01","","testscripts.spec.js","",""
-"","16448","Scenario 1: locked out user shows error message","chromium","2026-02-01","passed","2026-02-01","","testscripts.spec.js","",""
-"","16908","Scenario 2: valid user can log in","chromium","2026-02-01","passed","2026-02-01","","testscripts.spec.js","",""
