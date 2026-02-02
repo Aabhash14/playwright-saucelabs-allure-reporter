@@ -48,7 +48,7 @@ export default defineConfig({
       name: 'chromium',
       use: 
       { ...devices['Desktop Chrome'],
-      viewport:{width:1536,height:864}, // viewport added to maximize window
+      viewport:{width:1920,height:869}, // viewport added to maximize window
       screenshot:"on",                  // enable screenshot
       video:"on",                       // enable screen recorder
       trace:"on"                        // enable tracing
@@ -59,7 +59,7 @@ export default defineConfig({
       name: 'firefox',
       use: 
       { ...devices['Desktop Firefox'],
-      viewport:{width:1536,height:864},
+      viewport:{width:1920,height:869},
       screenshot:"on",
       video:"on",
       trace:"on"
@@ -70,7 +70,7 @@ export default defineConfig({
       name: 'webkit',
       use: 
       { ...devices['Desktop Safari'],
-      viewport:{width:1536,height:864},
+      viewport:{width:1920,height:869},
       screenshot:"on",
       video:"on",
       trace:"on"

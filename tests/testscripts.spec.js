@@ -1,23 +1,35 @@
 const { test, expect } = require('@playwright/test');
+const { LoginPage } = require('./pages/login.page');
+const { InventoryPage } = require('./pages/inventory.page');
 
-test('Scenario 1: locked out user shows error message', async function({ page }) { // inorder to work with promises, async should use
-  await page.goto('https://www.saucedemo.com');
-  await page.getByPlaceholder('Username').fill('locked_out_user');               // here i used fill instead of type because fill clears the field first and it's fast and reliable
-  await page.getByPlaceholder('Password').fill('secret_sauce');
-  await page.locator('[data-test="login-button"]').click();                              // used data-testId because it never changes due to UI redesign
+const cases = [
+  { user: 'standard_user', shouldPass: true },
+  { user: 'problem_user', shouldPass: true },
+  { user: 'performance_glitch_user', shouldPass: true },
+  { user: 'error_user', shouldPass: true },
+  { user: 'visual_user', shouldPass: true },
+  { user: 'locked_out_user', shouldPass: false },
+];
 
-  const error = page.locator('[data-test="error"]');                         // used to locate element whose attribute data-test has value error
-  await expect(error).toBeVisible();                                        // checks that the error element is visible on the screen
-  await expect(error).toHaveText('Epic sadface: Sorry, this user has been locked out.');  // verifies that the errpr message text is exactly this sentence
-})                                                                                       // also we can use toContainText() for partial match
+async function loginAndCheck(page, user, shouldPass) {
+  const login = new LoginPage(page);
+  const inventory = new InventoryPage(page);
+  const error = page.locator('[data-test="error"]');
 
-test('Scenario 2: valid user can log in', async function ({ page }) {
-  await page.goto('https://www.saucedemo.com');
-  await page.getByPlaceholder('Username').fill('standard_user');
-  await page.getByPlaceholder('Password').fill('secret_sauce');
-  await page.locator('[data-test="login-button"]').click();
+  await login.open();
+  await login.login(user, 'secret_sauce');
 
-  await expect(page).toHaveURL(/.*inventory\.html/);                              // This line is to check that user is successfully logged in and redirect to inventory page 
-  await expect(page.locator('[data-test="title"]')).toHaveText('Products');   // assertion that checks the page title after login is Products
-  await expect(page.locator('[data-test="inventory-list"]')).toBeVisible(); //verify that the inventory list(product) is displayed on the page
-})
+  if (shouldPass) {
+    await inventory.expectLoaded();
+    return;
+  }
+
+  await login.expectLockedOutMessage();
+  await expect(error).toContainText('Epic sadface');
+}
+
+for (const { user, shouldPass } of cases) {
+  test(`${user} login result`, async ({ page }) => {
+    await loginAndCheck(page, user, shouldPass);
+  });
+}
