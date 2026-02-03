@@ -34,8 +34,8 @@ Test logic is simple:
 
 ## Setup
 ```bash
-npm install
-npx playwright install
+npm init -y
+npm init playwright@latest
 ```
 
 ## Run tests
